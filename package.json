@@ -1,6 +1,6 @@
 {
   "name": "turbo-hash-map",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Fast Map built for keys that are always fixed size uniformly distributed buffers.",
   "main": "index.js",
   "dependencies": {},
