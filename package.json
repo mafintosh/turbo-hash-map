@@ -1,0 +1,24 @@
+{
+  "name": "turbo-hash-map",
+  "version": "0.0.0",
+  "description": "Fast Map built for keys that are always fixed size uniformly distributed buffers.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "brittle": "^2.0.3",
+    "standard": "^16.0.4"
+  },
+  "scripts": {
+    "test": "standard && brittle test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/turbo-hash-map.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/turbo-hash-map/issues"
+  },
+  "homepage": "https://github.com/mafintosh/turbo-hash-map"
+}
