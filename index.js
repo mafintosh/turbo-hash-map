@@ -228,8 +228,6 @@ module.exports = class HashMap {
 }
 
 function branch (f, a, b) {
-  while ((a & f) === (b & f)) {
-    f *= 2
-  }
+  while ((a & f) === (b & f)) f *= 2
   return f * 2
 }
