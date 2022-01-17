@@ -1,4 +1,4 @@
-const HashMap = require('./')
+const HashMap = require('../')
 
 const h = new HashMap()
 const s = new Map()
@@ -25,8 +25,12 @@ function copy (list) {
   return l
 }
 
+const noop = () => {}
+
+const iterations = 1000
+
 console.time('turbo-hash-map-set')
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < iterations; i++) {
   for (const k of ls()) {
     h.set(k, k)
   }
@@ -34,15 +38,23 @@ for (let i = 0; i < 1000; i++) {
 console.timeEnd('turbo-hash-map-set')
 
 console.time('turbo-hash-map-get')
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < iterations; i++) {
   for (const k of ls()) {
     h.get(k)
   }
 }
 console.timeEnd('turbo-hash-map-get')
 
+console.time('turbo-hash-map-iterate')
+for (let i = 0; i < iterations; i++) {
+  for (const [k] of h) {
+    noop(k[Math.round(Math.random() * 4)]) // prevent dead-code removal optimization
+  }
+}
+console.timeEnd('turbo-hash-map-iterate')
+
 console.time('js-map-set')
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < iterations; i++) {
   for (const k of ls()) {
     s.set(k.toString('hex'), k)
   }
@@ -50,12 +62,20 @@ for (let i = 0; i < 1000; i++) {
 console.timeEnd('js-map-set')
 
 console.time('js-map-get')
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < iterations; i++) {
   for (const k of ls()) {
     s.get(k.toString('hex'))
   }
 }
 console.timeEnd('js-map-get')
+
+console.time('js-map-iterate')
+for (let i = 0; i < iterations; i++) {
+  for (const [k] of s) {
+    noop(k[Math.random(Math.random() * 4)]) // prevent dead-code removal optimization
+  }
+}
+console.timeEnd('js-map-iterate')
 
 function hash (k) {
   return require('crypto').createHash('sha256').update(k).digest()
