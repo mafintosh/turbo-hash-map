@@ -1,7 +1,7 @@
 class Trie {
-  constructor (byte, key, value) {
+  constructor (byte, density, key, value) {
     this.byte = byte
-    this.density = 1
+    this.density = density
     this.key = key
     this.value = value
     this.next = null
@@ -22,7 +22,7 @@ class Trie {
   split (hash, i) {
     const byte = hash[i]
 
-    const t = new Trie(this.key[i], this.key, this.value)
+    const t = new Trie(this.key[i], this.density, this.key, this.value)
 
     this.key = null
     this.value = null
@@ -34,7 +34,7 @@ class Trie {
       return t
     }
 
-    const n = new Trie(byte, hash, null)
+    const n = new Trie(byte, 0, hash, null)
     const b = branch(1, byte, t.byte)
     const mask = b - 1
 
@@ -74,7 +74,7 @@ class Trie {
     if (n === undefined) {
       if (upsert === false) return null
       this.density++
-      return (this.next[bm] = new Trie(byte, hash, null))
+      return (this.next[bm] = new Trie(byte, 0, hash, null))
     }
 
     if (n.byte === byte) return n
@@ -84,7 +84,7 @@ class Trie {
     const next = new Array(b)
 
     mask = next.length - 1
-    n = new Trie(byte, hash, null)
+    n = new Trie(byte, 0, hash, null)
     next[byte & mask] = n
 
     for (let i = 0; i < this.next.length; i++) {
@@ -165,9 +165,7 @@ module.exports = class HashMap {
     let t = this.trie
 
     if (t === null) {
-      this.trie = new Trie(0)
-      this.trie.key = hash
-      this.trie.value = value
+      this.trie = new Trie(0, 1, hash, value)
       this.size = 1
       return
     }
@@ -178,8 +176,10 @@ module.exports = class HashMap {
         continue
       }
       if (t.key.equals(hash)) {
-        if (t.value === value) return
-        this.size++
+        if (t.density === 0) {
+          t.density = 1
+          this.size++
+        }
         t.value = value
         return
       }
