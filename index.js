@@ -98,7 +98,7 @@ class Trie {
   }
 }
 
-module.exports = class HashMap {
+module.exports = class TurboHashMap {
   constructor () {
     this.trie = null
     this.size = 0
