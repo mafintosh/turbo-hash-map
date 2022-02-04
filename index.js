@@ -1,3 +1,5 @@
+const b4a = require('b4a')
+
 class Trie {
   constructor (byte, density, key, value) {
     this.byte = byte
@@ -137,7 +139,7 @@ module.exports = class TurboHashMap {
         continue
       }
 
-      return t.key.equals(hash) ? t.value : undefined
+      return b4a.equals(t.key, hash) ? t.value : undefined
     }
 
     return undefined
@@ -155,7 +157,7 @@ module.exports = class TurboHashMap {
         continue
       }
 
-      return t.key.equals(hash)
+      return b4a.equals(t.key, hash)
     }
 
     return false
@@ -175,7 +177,7 @@ module.exports = class TurboHashMap {
         t = t.get(hash, i, true)
         continue
       }
-      if (t.key.equals(hash)) {
+      if (b4a.equals(t.key, hash)) {
         if (t.density === 0) {
           t.density = 1
           this.size++
@@ -201,7 +203,7 @@ module.exports = class TurboHashMap {
         t = t.get(hash, i, false)
         if (t === null) return false
       } else {
-        if (t.key.equals(hash)) {
+        if (b4a.equals(t.key, hash)) {
           t.density = 0
           this.size--
         }
