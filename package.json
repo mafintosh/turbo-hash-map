@@ -3,7 +3,9 @@
   "version": "1.0.2",
   "description": "Fast Map built for keys that are always fixed size uniformly distributed buffers.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "b4a": "^1.3.1"
+  },
   "devDependencies": {
     "brittle": "^2.0.3",
     "standard": "^16.0.4"
